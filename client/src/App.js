@@ -2,20 +2,20 @@ import "./App.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import DisplayFavorites from "./DisplayFavorites";
-import { title } from "process";
 /* eslint-disable no-unused-expressions*/
 
 function App() {
   const [chart, setChart] = useState("");
+  const [date, setDate] = useState("");
 
-  useEffect(() => {
+  const getChartTracks = (date) => {
     const options = {
       method: "GET",
       url: "https://billboard2.p.rapidapi.com/hot_100",
-      params: { date: "2020-03-18" },
+      params: { date: `${date}` },
       headers: {
         "x-rapidapi-host": "billboard2.p.rapidapi.com",
-        "x-rapidapi-key": "dd0f240ef0msh61ee024403845dfp18f505jsn19ef90bf7c26",
+        "x-rapidapi-key": "cc707e1543msh1613eed412bd590p1b1c0djsn527e766c0e9c",
       },
     };
     axios
@@ -28,24 +28,44 @@ function App() {
         console.error(error);
       }),
       [];
-  });
-
-  const like = (e) => {
-    e.preventDefault();
-    console.log("success");
-    const newTrackData = { rank, artist, title };
-    console.log(newTrackData);
-    axios
-      .post("http://localhost:8000/api/track", newTrackData)
-      .then((newTrack) => {
-        console.log(newTrack);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:8000/api/track", chart)
+  //     .then((response) => {
+  //       console.log(response.data._id);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [chart]);
+  // const like = (e) => {
+  //   e.preventDefault();
+  //   console.log("success");
+  //   const newTrackData = { rank, artist, title };
+  //   console.log(newTrackData);
+  //   axios
+  //     .post("http://localhost:8000/api/track", newTrackData)
+  //     .then((newTrack) => {
+  //       console.log(newTrack);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   return (
     <div className="App">
+      <div>
+        <form onSubmit={getChartTracks(date)}>
+          <input
+            type="text"
+            placeholder="Enter Date yyyy-mm-dd (Saturdays Only)"
+            onChange={(e) => setDate(e.target.value)}
+          ></input>
+          <button>Submit</button>
+        </form>
+      </div>
       {chart
         ? chart.length > 0 &&
           chart.map((song, index) => (
@@ -54,12 +74,12 @@ function App() {
                 {song.rank} <span>{song.title}</span> <span>{song.artist}</span>{" "}
                 <span>
                   <button
-                    onClick={(e) => {
-                      const rank = song.rank;
-                      const artist = song.artist;
-                      const title = song.title;
-                      like(rank, artist, title);
-                    }}
+                  // onClick={(e) => {
+                  //   const rank = song.rank;
+                  //   const artist = song.artist;
+                  //   const title = song.title;
+                  //   like(rank, artist, title);
+                  // }}
                   >
                     Favorite
                   </button>

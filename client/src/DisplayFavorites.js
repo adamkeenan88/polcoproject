@@ -16,6 +16,7 @@ const DisplayFavorites = (props) => {
   }, []);
 
   const deleteTrack = (id) => {
+    console.log(id);
     axios
       .delete(`http://localhost:8000/api/track/${id}`)
       .then((response) => {
@@ -27,7 +28,7 @@ const DisplayFavorites = (props) => {
   return (
     <div>
       <h2>Your Favorite Tracks:</h2>
-      <table className="allTracks">
+      <tbody className="allTracks">
         {tracks
           ? tracks.length > 0 &&
             tracks.map((track, index) => (
@@ -44,7 +45,7 @@ const DisplayFavorites = (props) => {
               </tr>
             ))
           : "Tracks Loading"}
-      </table>
+      </tbody>
     </div>
   );
 };

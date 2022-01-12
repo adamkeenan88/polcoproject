@@ -6,7 +6,7 @@ module.exports.index = (request, response) => {
 };
 
 module.exports.createTrack = (request, response) => {
-  const { rank, artist, title } = request.body;
+  const { chart } = request.body;
   Track.create(request.body)
     .then((track) => response.json(track))
     .catch((err) => response.json(err));
@@ -19,7 +19,7 @@ module.exports.findTrack = (req, res) => {
 };
 
 module.exports.deleteTrack = (req, res) => {
-  Track.deleteOne({ _id: req.params.trackId })
+  Track.deleteOne({ _id: req.params.id })
     .then((result) => res.json({ result: result }))
     .catch((err) => res.json({ message: "Something went wrong", error: err }));
 };

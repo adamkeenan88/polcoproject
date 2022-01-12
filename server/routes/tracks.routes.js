@@ -5,5 +5,5 @@ module.exports = (app) => {
   });
   app.post("/api/track", TracksController.createTrack);
   app.get("/api", TracksController.findTrack);
-  app.delete("/api/track/:trackId", TracksController.deleteTrack);
+  app.delete("/api/track/:id", TracksController.deleteTrack);
 };
